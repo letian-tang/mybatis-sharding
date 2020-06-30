@@ -36,8 +36,6 @@ public class DefaultSqlParser implements SqlParser {
         TablesNamesFinder tablesNamesFinder =
                 new TablesNamesModifier(shardStrategy, shardingProperties);
         statement.accept(tablesNamesFinder);
-        StatementDeParser statementDeParser = new StatementDeParser(new StringBuilder());
-        statement.accept(statementDeParser);
-        return statementDeParser.getBuffer().toString();
+        return statement.toString();
     }
 }

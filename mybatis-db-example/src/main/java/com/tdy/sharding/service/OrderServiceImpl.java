@@ -22,11 +22,20 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private OrderMapper orderMapper;
 
+    /**
+     * 单表支持
+     * 
+     * @param order
+     */
     @Override
     public void insert(Order order) {
         orderMapper.insert(order);
     }
 
+    /**
+     * @Transactional 注解事务支持
+     * @param orders
+     */
     @Override
     @Transactional
     public void insertBatch(List<Order> orders) {
@@ -35,6 +44,11 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
+    /**
+     * 事务模板 transactionTemplate 支持
+     * 
+     * @param orders
+     */
     @Override
     public void insertBatchTemplate(List<Order> orders) {
         transactionTemplate.execute(new TransactionCallbackWithoutResult() {
@@ -47,8 +61,19 @@ public class OrderServiceImpl implements OrderService {
         });
     }
 
+    /**
+     * 查询支持
+     * 
+     * @return
+     */
     @Override
     public List<Order> select() {
         return orderMapper.selectList(new LambdaQueryWrapper<Order>());
+    }
+
+    @Override
+    @Transactional
+    public void insertBatchList(List<Order> orders) {
+        orderMapper.insertBatchList(orders);
     }
 }

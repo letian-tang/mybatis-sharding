@@ -3,4 +3,11 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.tdy.sharding.mapper.OrderMapper">
 
+    <update id="insertBatchList" parameterType="list">
+        <foreach collection="list" item="item" index="index"
+                 separator=";">
+            insert into t_order (name) values (#{item.name})
+        </foreach>
+    </update>
+
 </mapper>

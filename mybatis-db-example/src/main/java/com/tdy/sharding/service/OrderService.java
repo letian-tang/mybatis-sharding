@@ -14,4 +14,6 @@ public interface OrderService {
     void insertBatchTemplate(List<Order> orders);
 
     List<Order> select();
+
+    void insertBatchList(List<Order> orders);
 }

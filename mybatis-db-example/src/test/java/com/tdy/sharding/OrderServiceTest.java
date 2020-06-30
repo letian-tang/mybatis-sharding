@@ -51,4 +51,13 @@ public class OrderServiceTest {
     public void selectOrder() {
         orderService.select();
     }
+
+    /**
+     * 测试 多条sql语句，分号;分隔
+     */
+    @Test
+    public void saveOrder4() {
+        orderService.insertBatchList(Lists.newArrayList(Order.builder().name("66666").build(),
+                Order.builder().name("77777").build()));
+    }
 }
