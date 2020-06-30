@@ -1,5 +1,6 @@
 史上最简洁的分库分表中间件  
 基于Spring+Mybatis的分库分表  
+数据源默认使用HikariDataSource
 ```
 @Component
 public class ShardingStrategyImpl implements ShardingStrategy {
@@ -13,3 +14,5 @@ public class ShardingStrategyImpl implements ShardingStrategy {
     }
 }
 ```
+mybatis-db-sharding 分库分表   
+mybatis-db-example OrderServiceTest 单元测试

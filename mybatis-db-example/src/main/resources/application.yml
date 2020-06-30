@@ -1,0 +1,51 @@
+#****************************** spring应用设置 ******************************
+spring:
+  application:
+    name: sophon-service
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  main:
+    allow-bean-definition-overriding: true
+
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    deserialization:
+      fail-on-unknown-properties: false
+      read-unknown-enum-values-as-null: true
+    serialization:
+      fail-on-empty-beans: false
+
+  #全局redis缓存时间
+  cache:
+    redis:
+      time-to-live: 1h
+  #线程池配置
+  task:
+    execution:
+      pool:
+        allow-core-thread-timeout: true
+        core-size: 16
+        keep-alive: 60s
+        max-size: 48
+        queue-capacity: 1024
+      thread-name-prefix: async-service-
+    #定时器配置
+    scheduling:
+      pool:
+        size: 4
+      thread-name-prefix: scheduling-
+
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**/*.xml
+  type-aliases-package: com.tdy.sharding.po
+  configuration:
+    map-underscore-to-camel-case: true
+
