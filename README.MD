@@ -6,12 +6,10 @@
 @Component
 public class ShardingStrategyImpl implements ShardingStrategy {
 
-    private Long shardingKey = 15L;
-
     @Override
     public Long getShardingKey() {
         // 例子：从ThreadLocal中获取当前卖家id，通过卖家id sharding
-        return shardingKey;
+        return SellerIdHolder.getSellerId();
     }
 }
 ```
