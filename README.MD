@@ -25,14 +25,14 @@ mybatis.db.sharding.enabled=true
 mybatis.db.sharding.mapper-pointcuts=execution(* com.tdy..*Mapper.*(..))
 #数据库1
 mybatis.db.sharding.data-sources[0].jdbc-url=jdbc:mysql://localhost:3306/sophon_0?serverTimezone=Asia/Shanghai&allowMultiQueries=true&useSSL=false&zeroDateTimeBehavior=convertToNull&useAffectedRows=true
-mybatis.db.sharding.data-sources[0].username=root
-mybatis.db.sharding.data-sources[0].password=qazWSX098
+mybatis.db.sharding.data-sources[0].username=username
+mybatis.db.sharding.data-sources[0].password=password
 mybatis.db.sharding.data-sources[0].maximum-pool-size=10
 mybatis.db.sharding.data-sources[0].idle-timeout=10000
 #数据库2
 mybatis.db.sharding.data-sources[1].jdbc-url=jdbc:mysql://localhost:3306/sophon_1?serverTimezone=Asia/Shanghai&allowMultiQueries=true&useSSL=false&zeroDateTimeBehavior=convertToNull&useAffectedRows=true
-mybatis.db.sharding.data-sources[1].username=root
-mybatis.db.sharding.data-sources[1].password=qazWSX098
+mybatis.db.sharding.data-sources[1].username=username
+mybatis.db.sharding.data-sources[1].password=password
 mybatis.db.sharding.data-sources[1].maximum-pool-size=3
 mybatis.db.sharding.data-sources[1].idle-timeout=10000
 #表名t_order，nums分表数量4，不配置的表不进行分表
