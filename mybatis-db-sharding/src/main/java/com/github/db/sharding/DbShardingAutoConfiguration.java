@@ -32,8 +32,7 @@ import com.github.db.sharding.db.DynamicDataSource;
  */
 @Configuration
 @ComponentScan("com.github.db.sharding")
-@ConditionalOnProperty(prefix = "mybatis.db.sharding", name = "enabled",
-        havingValue = "true")
+@ConditionalOnProperty(prefix = "mybatis.db.sharding", name = "enabled", havingValue = "true")
 public class DbShardingAutoConfiguration {
 
 
@@ -55,25 +54,12 @@ public class DbShardingAutoConfiguration {
         this.shardStrategy = shardStrategy;
     }
 
-    @Bean
-    public ShardingInterceptor shardingPlugin() {
-        return new ShardingInterceptor();
-    }
 
-
-    @Bean(destroyMethod = "close")
-    public DynamicDataSource dataSource() {
-        DynamicDataSource resolver = new DynamicDataSource();
-        Map<Object, Object> dataSources = new HashMap<>();
-        List<HikariConfig> hikariConfigs = shardingProperties.getDataSources();
-        int i = 0;
-        for (HikariConfig hikariConfig : hikariConfigs) {
-            dataSources.put(DbShardingUtils.dbKey((long) i++), new HikariDataSource(hikariConfig));
-        }
-        resolver.setTargetDataSources(dataSources);
-        return resolver;
-    }
-
+    /**
+     * 拦截器
+     * 
+     * @return defaultPointcutAdvisor
+     */
     @Bean
     public DefaultPointcutAdvisor defaultPointcutAdvisor() {
         List<String> expressionList = shardingProperties.getMapperPointcuts();
@@ -87,6 +73,34 @@ public class DbShardingAutoConfiguration {
         advisor.setPointcut(pointcut);
         advisor.setAdvice(interceptor);
         return advisor;
+    }
+
+    /**
+     * 数据源
+     * 
+     * @return resolver
+     */
+    @Bean(destroyMethod = "close")
+    public DynamicDataSource dataSource() {
+        DynamicDataSource resolver = new DynamicDataSource();
+        Map<Object, Object> dataSources = new HashMap<>();
+        List<HikariConfig> hikariConfigs = shardingProperties.getDataSources();
+        int i = 0;
+        for (HikariConfig hikariConfig : hikariConfigs) {
+            dataSources.put(DbShardingUtils.dbKey((long) i++), new HikariDataSource(hikariConfig));
+        }
+        resolver.setTargetDataSources(dataSources);
+        return resolver;
+    }
+
+    /**
+     * mybatis拦截器
+     * 
+     * @return ShardingInterceptor
+     */
+    @Bean
+    public ShardingInterceptor shardingPlugin() {
+        return new ShardingInterceptor();
     }
 
 }

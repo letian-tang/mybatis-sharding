@@ -18,6 +18,40 @@ public class ShardingStrategyImpl implements ShardingStrategy {
 mybatis-db-sharding 分库分表   
 mybatis-db-example OrderServiceTest 单元测试
 
+```$xslt
+如果有事务，需要在开启事务之前确定数据源   
+那么就需要对@Transactional 和 TransactionTemplate.execute做拦截    
+
+private static final String EXPRESSION_TRANSACTIONAL =
+            "@annotation(org.springframework.transaction.annotation.Transactional)";
+
+private static final String EXPRESSION_TRANSACTIONAL_TEMPLATE =
+        "execution(* org.springframework.transaction.support.TransactionTemplate.execute(..))";
+
+private final String[] expressions =
+        new String[] {EXPRESSION_TRANSACTIONAL, EXPRESSION_TRANSACTIONAL_TEMPLATE};
+
+/**
+ * 拦截器
+ * 
+ * @return defaultPointcutAdvisor
+ */
+@Bean
+public DefaultPointcutAdvisor defaultPointcutAdvisor() {
+    List<String> expressionList = shardingProperties.getMapperPointcuts();
+    Assert.notEmpty(expressionList, "Mapper Pointcut is null");
+    DataSourceAdvice interceptor = new DataSourceAdvice(shardStrategy, shardingProperties);
+    AspectJExpressionPointcut pointcut = new AspectJExpressionPointcut();
+    expressionList.addAll(Arrays.asList(expressions));
+    String expression = String.join(" || ", expressionList);
+    pointcut.setExpression(expression);
+    DefaultPointcutAdvisor advisor = new DefaultPointcutAdvisor();
+    advisor.setPointcut(pointcut);
+    advisor.setAdvice(interceptor);
+    return advisor;
+}
+```
+
 ```
 #开启
 mybatis.db.sharding.enabled=true
