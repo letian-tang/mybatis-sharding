@@ -1,9 +1,12 @@
 package com.tdy.sharding;
 
 import com.tdy.sharding.ShardingApplication;
+import com.tdy.sharding.common.SellerIdHolder;
 import com.tdy.sharding.po.Order;
 import com.tdy.sharding.service.OrderService;
 import org.assertj.core.util.Lists;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +20,17 @@ public class OrderServiceTest {
 
     @Autowired
     private OrderService orderService;
+
+
+    @Before
+    public void init() {
+        SellerIdHolder.setSellerId(12L);
+    }
+
+    @After
+    public void after() {
+        SellerIdHolder.clear();
+    }
 
     /**
      * 单表

@@ -14,10 +14,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class ShardingStrategyImpl implements ShardingStrategy {
 
-    private Long shardingKey = 14L;
-
     @Override
     public Long getShardingKey() {
-        return shardingKey;
+        return SellerIdHolder.getSellerId();
     }
 }
