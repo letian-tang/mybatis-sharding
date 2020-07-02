@@ -1,5 +1,5 @@
     史上最简洁的分库分表中间件  
-    基于Spring+Mybatis的分库分表
+    基于Springboot+Mybatis的分库分表
     基于Mapper的切面  
     数据源默认使用HikariDataSource
 ```
